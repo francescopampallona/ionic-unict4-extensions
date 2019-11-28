@@ -23,7 +23,8 @@
           </ng-template>
   
         </ion-label>
-        <ion-note slot="end">{{ tweet.created_at | unictDate: 1 }}</ion-note>
+        <ion-note slot="end">{{tweet._likes.length}} likes {{ tweet.created_at | unictDate: 1 }}</ion-note>
+        
       </ion-item>
   
       <ion-item-options *ngIf="canEdit(tweet)" side="end">
@@ -36,9 +37,19 @@
       </ion-item-options>
 
       <ion-item-options side="start">
-        <ion-item-option color="black" background-color="secondary" (click)="createComment(tweet)">
+        <ion-item-option color="black"  (click)="createComment(tweet)">
           <ion-icon slot="icon-only" name="md-chatbubbles"></ion-icon>
         </ion-item-option>
+        <ion-item-option color="light" (click)="addLike(tweet)" *ngIf="!liked(tweet)">
+          <ion-icon slot="icon-only" name="star"></ion-icon>  
+        </ion-item-option>
+        <ion-item-option  color="primary" (click)="removeLike(tweet)" *ngIf="liked(tweet)">
+          <ion-icon slot="icon-only" name="star"></ion-icon>  
+        </ion-item-option>
+        <!--
+        <ion-item-option color="black" background-color="secondary" (click)="favourites(tweet)">
+          <ion-icon slot="icon-only" name="bookmark"></ion-icon> Aggiungere colori per distinzione favorito aggiunto o non aggiunto 
+        </ion-item-option>-->
       </ion-item-options>
     </ion-item-sliding>
 
