@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UniLoaderService } from 'src/app/shared/uniLoader.service';
 import { ToastService } from 'src/app/shared/toast.service';
 import { ToastTypes } from 'src/app/enums/toast-types.enum';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-tweets',
@@ -15,7 +16,7 @@ import { ToastTypes } from 'src/app/enums/toast-types.enum';
   styleUrls: ['./tweets.page.scss'],
 })
 export class TweetsPage implements OnInit {
-
+  me: User;
   tweets: Tweet[] = [];
 
   constructor(
@@ -30,6 +31,8 @@ export class TweetsPage implements OnInit {
 
     // Quando carico la pagina, riempio il mio array di Tweets
     await this.getTweets();
+    //Ottengo i miei dati
+    this.me = this.auth.me;
 
   }
 
@@ -185,5 +188,53 @@ export class TweetsPage implements OnInit {
     return await modal1.present();
 
   }
+
+  /**
+   * GESTIONE DEI LIKES
+   */
+  //ADD
+  async addLike(tweet: Tweet){
+    try{
+        await this.tweetsService.addLike(tweet);
+        // Riaggiorno la mia lista di tweets
+        await this.getTweets();
+      }catch(err){
+        // Nel caso la chiamata vada in errore, mostro l'errore in un toast
+        await this.toastService.show({
+          message: err.message,
+          type: ToastTypes.ERROR
+        });
+  }
+  }
+  //REMOVE
+  async removeLike(tweet: Tweet){
+    try{
+        await this.tweetsService.removeLike(tweet);
+        // Riaggiorno la mia lista di tweets
+        await this.getTweets();
+      }catch(err){
+        // Nel caso la chiamata vada in errore, mostro l'errore in un toast
+        await this.toastService.show({
+          message: err.message,
+          type: ToastTypes.ERROR
+        });
+  }
+  }
+  //CONTROLLO SE HO MESSO MI PIACE A UN TWEET SPECIFICO
+  liked(tweet: Tweet){
+    if(tweet._likes.indexOf(this.me._id)===-1){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+  
+  /**
+   * GESTIONE DEI PREFERITI
+   */
+  //ADD
+  //REMOVE
+
 
 }
