@@ -12,5 +12,6 @@ export interface Tweet {
     _id: string;
     tweet: string;
     _author: User;
-    _parentTweet: Tweet;
+    _likes?: Array<string>;
+    _parentTweet?: Tweet;
 }
