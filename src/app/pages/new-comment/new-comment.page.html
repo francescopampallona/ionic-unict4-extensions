@@ -11,7 +11,8 @@
 
 <ion-content>
 
-  <ion-item *ngFor="let comment of comments"> 
+  <ion-item-sliding *ngFor="let comment of comments"> 
+    <ion-item> 
     <ion-label>
       <h2>{{comment.tweet}}</h2>
 
@@ -24,9 +25,19 @@
       </ng-template>
 
     </ion-label>
-    <ion-note slot="end">{{ comment.created_at}}</ion-note>
+    <ion-note slot="end"><b>{{comment._likes.length}} likes</b> {{ comment.created_at}}</ion-note>
+    </ion-item>
+    <ion-item-options side="start">
+      
+      <ion-item-option color="light" (click)="addLike(comment)" *ngIf="!liked(comment)">
+        <ion-icon slot="icon-only" name="star"></ion-icon>  
+      </ion-item-option>
+      <ion-item-option  color="primary" (click)="removeLike(comment)" *ngIf="liked(comment)">
+        <ion-icon slot="icon-only" name="star"></ion-icon>  
+      </ion-item-option>
+    </ion-item-options>
   
-  </ion-item>
+  </ion-item-sliding>
 
 </ion-content>
 
