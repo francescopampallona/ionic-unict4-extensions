@@ -55,6 +55,20 @@ export class TweetsService {
       headers: headerOptions
     }).toPromise();
   }
-  
+
+  //ADD LIKE (ricordare queste virgolette '' come secondo argomento della richiesta http ... stavo impazzendo!!!!)
+   async addLike(tweet: Tweet) {
+    const headerOptions = this.httpOptions.headers.append('Authorization', `Bearer ${this.auth.userToken}`);
+    return this.http.post<any>(`${environment.API_URL}/tweets/${tweet._id}/new_like`,'', {
+      headers: headerOptions
+    }).toPromise();
+  }
+  //REMOVE LIKE
+  async removeLike(tweet: Tweet) {
+    const headerOptions = this.httpOptions.headers.append('Authorization', `Bearer ${this.auth.userToken}`);
+    return this.http.post<any>(`${environment.API_URL}/tweets/${tweet._id}/remove_like`,'', {
+      headers: headerOptions
+    }).toPromise();
+  }
 
 }
