@@ -23,7 +23,7 @@
           </ng-template>
   
         </ion-label>
-        <ion-note slot="end">{{tweet._likes.length}} likes {{ tweet.created_at | unictDate: 1 }}</ion-note>
+        <ion-note slot="end"><b>{{tweet._likes.length}} likes</b> {{ tweet.created_at | unictDate: 1 }}</ion-note>
         
       </ion-item>
   
@@ -41,10 +41,10 @@
           <ion-icon slot="icon-only" name="md-chatbubbles"></ion-icon>
         </ion-item-option>
         <ion-item-option color="light" (click)="addLike(tweet)" *ngIf="!liked(tweet)">
-          <ion-icon slot="icon-only" name="star"></ion-icon>  
+          <ion-icon slot="icon-only" name="star"></ion-icon> <!--Aggiungere colori per distinzione like messo o non messo-->
         </ion-item-option>
         <ion-item-option  color="primary" (click)="removeLike(tweet)" *ngIf="liked(tweet)">
-          <ion-icon slot="icon-only" name="star"></ion-icon>  
+          <ion-icon slot="icon-only" name="star"></ion-icon> <!--Aggiungere colori per distinzione like messo o non messo-->
         </ion-item-option>
         <!--
         <ion-item-option color="black" background-color="secondary" (click)="favourites(tweet)">
