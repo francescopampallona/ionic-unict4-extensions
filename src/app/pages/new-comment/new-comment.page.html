@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Comments</ion-title>
+  <ion-buttons slot="end">
+    <ion-button color="dark" (click)="dismiss()">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item *ngFor="let comment of comments"> 
+    <ion-label>
+      <h2>{{comment.tweet}}</h2>
+
+      <p *ngIf="comment._author; else userDeleted" class="user" [class.me]="canEdit(comment)">
+        {{ getAuthor(comment) }} 
+        <ion-icon *ngIf="canEdit(comment)" name="heart" color="danger-tint"></ion-icon> 
+      </p>
+      <ng-template #userDeleted>
+        <p class="user-deleted">User deleted</p>
+      </ng-template>
+
+    </ion-label>
+    <ion-note slot="end">{{ comment.created_at}}</ion-note>
+  
+  </ion-item>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-label position="stacked">Insert new comment</ion-label>
+    <ion-textarea [(ngModel)]="newComment.tweet"></ion-textarea>
+    <ion-button expand="full" [disabled]="isDataInvalid()" (click)="comment()">Comment</ion-button>
+  </ion-toolbar>
+</ion-footer>
