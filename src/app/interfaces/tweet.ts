@@ -14,4 +14,5 @@ export interface Tweet {
     _author: User;
     _likes?: Array<string>;
     _parentTweet?: Tweet;
+    hashtag: string[];
 }
