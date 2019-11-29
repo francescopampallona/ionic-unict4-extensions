@@ -19,6 +19,7 @@ import {Favourite, User } from 'src/app/interfaces/user';
 export class TweetsPage implements OnInit {
   me: User;
   tweets: Tweet[] = [];
+  hash: string = "";
   
 
   constructor(
@@ -237,7 +238,7 @@ export class TweetsPage implements OnInit {
   /**
    * GESTIONE DEI PREFERITI
    */
-  
+  //OTTENGO LA MIA LISTA DI PREFERITI
   
   //ADD
   async addFavourite(tweet: Tweet){
@@ -262,7 +263,6 @@ export class TweetsPage implements OnInit {
       await this.usersService.removeFavourite(this.me._id, favourite);
       // Riaggiorno la mia lista di preferiti
       this.me = await this.auth.getMe();
-
     }catch(err){
       // Nel caso la chiamata vada in errore, mostro l'errore in un toast
       await this.toastService.show({
@@ -291,6 +291,38 @@ export class TweetsPage implements OnInit {
    
     this.tweets = this.me._favourites;
   }
+
+  async search() {
+    if(this.hash != '') {
+      try {
+
+        let tmp: string = this.hash;
+
+        // Avvio il loader
+        await this.uniLoader.show();
+
+        // Popolo il mio array di oggetti 'Tweet' con quanto restituito dalla chiamata API
+        while(!tmp.search('#'))
+          tmp = tmp.replace('#', "");
+        this.tweets = await this.tweetsService.getHashtag(tmp);
+
+        // La chiamata è andata a buon fine, dunque rimuovo il loader
+        await this.uniLoader.dismiss();
+
+      } catch (err) {
+
+        // Nel caso la chiamata vada in errore, mostro l'errore in un toast
+        await this.toastService.show({
+          message: err.message,
+          type: ToastTypes.ERROR
+        });
+
+      }
+    } else {
+      await this.getTweets();
+    }
+  }
+
 
 
 }
