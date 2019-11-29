@@ -70,5 +70,9 @@ export class TweetsService {
       headers: headerOptions
     }).toPromise();
   }
+  // CERCA HASHTAG
+  async getHashtag(hashtag: string) {
+    return this.http.get<Tweet[]>(`${environment.API_URL}/tweets/${hashtag}/search`).toPromise();
+  }
 
 }
