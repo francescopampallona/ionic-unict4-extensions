@@ -5,12 +5,14 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-searchbar animated placeholder='Search hashtag' [(ngModel)]="hash" id="searchbar">
+    <button (click)="search()" id="searchButton">Cerca</button>
+  </ion-searchbar>
   <ion-list>
 
     <ion-item-sliding *ngFor="let tweet of tweets">
 
-      <ion-item>
+      <ion-item (click)="createComment(tweet)">
         <ion-label>
           <h2>{{tweet.tweet}}</h2>
   
