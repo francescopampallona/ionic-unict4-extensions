@@ -10,3 +10,27 @@
     font-weight: bold;
     color: var(--ion-color-danger-tint);
 }
+
+#searchButton {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-position: left 8px center;
+    height: auto;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 25px;
+    line-height: 30px;
+    border: 2px solid grey;
+    background-color: white;
+    right: 10px;
+    position: absolute;
+}
+
+#searchButton:hover {
+    background-color: black;
+    color: white;
+}
+
+#searchbar{
+    padding-right: 80px;
+}
