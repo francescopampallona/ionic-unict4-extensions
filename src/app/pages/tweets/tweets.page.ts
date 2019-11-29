@@ -237,7 +237,7 @@ export class TweetsPage implements OnInit {
   /**
    * GESTIONE DEI PREFERITI
    */
-  //OTTENGO LA MIA LISTA DI PREFERITI
+  
   
   //ADD
   async addFavourite(tweet: Tweet){
