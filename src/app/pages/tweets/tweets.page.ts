@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Tweet } from 'src/app/interfaces/tweet';
 import { TweetsService } from 'src/app/services/tweets/tweets.service';
+import {UsersService} from 'src/app/services/users/users.service';
 import { ModalController } from '@ionic/angular';
 import { NewTweetPage } from '../new-tweet/new-tweet.page';
 import {NewCommentPage} from '../new-comment/new-comment.page';
@@ -8,7 +9,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UniLoaderService } from 'src/app/shared/uniLoader.service';
 import { ToastService } from 'src/app/shared/toast.service';
 import { ToastTypes } from 'src/app/enums/toast-types.enum';
-import { User } from 'src/app/interfaces/user';
+import {Favourite, User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-tweets',
@@ -18,8 +19,10 @@ import { User } from 'src/app/interfaces/user';
 export class TweetsPage implements OnInit {
   me: User;
   tweets: Tweet[] = [];
+  
 
   constructor(
+    private usersService: UsersService,
     private tweetsService: TweetsService,
     private modalCtrl: ModalController,
     private auth: AuthService,
@@ -33,6 +36,7 @@ export class TweetsPage implements OnInit {
     await this.getTweets();
     //Ottengo i miei dati
     this.me = this.auth.me;
+     
 
   }
 
@@ -233,8 +237,55 @@ export class TweetsPage implements OnInit {
   /**
    * GESTIONE DEI PREFERITI
    */
+  //OTTENGO LA MIA LISTA DI PREFERITI
+  
   //ADD
+  async addFavourite(tweet: Tweet){
+    try{
+      const favourite: Favourite = {"favourite": tweet._id};
+      await this.usersService.addFavourite(this.me._id,favourite);
+      // Riaggiorno la mia lista di preferiti
+      this.me= await this.auth.getMe();
+    }catch(err){
+      // Nel caso la chiamata vada in errore, mostro l'errore in un toast
+      await this.toastService.show({
+        message: err.message,
+        type: ToastTypes.ERROR
+      });
+    }
+  }
+
   //REMOVE
+  async removeFavourite(tweet: Tweet){
+    try{
+      const favourite: Favourite = {"favourite": tweet._id};
+      await this.usersService.removeFavourite(this.me._id, favourite);
+      // Riaggiorno la mia lista di preferiti
+      this.me = await this.auth.getMe();
+
+    }catch(err){
+      // Nel caso la chiamata vada in errore, mostro l'errore in un toast
+      await this.toastService.show({
+        message: err.message,
+        type: ToastTypes.ERROR
+      });
+
+    }
+  }
+
+  //CONTROLLO SE UN TWEET SPECIFICO FA PARTE DELLA MIA LISTA PREFERITI
+  isFavourite(tweet: Tweet){
+    
+    for (var i=0; i < this.me._favourites.length; i++) {
+      if (this.me._favourites[i]._id === tweet._id) {
+          return true;
+        }
+    }
+    
+      return false;
+    
+
+  }
 
 
 }
