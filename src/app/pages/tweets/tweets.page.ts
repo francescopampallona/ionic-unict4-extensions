@@ -236,7 +236,8 @@ export class TweetsPage implements OnInit {
   
   /**
    * GESTIONE DEI PREFERITI
-   */ 
+   */
+  //OTTENGO LA MIA LISTA DI PREFERITI
   
   //ADD
   async addFavourite(tweet: Tweet){
@@ -284,6 +285,11 @@ export class TweetsPage implements OnInit {
       return false;
     
 
+  }
+  //MOSTRA SOLTANTO I PREFERITI
+  showFavourites(){
+   
+    this.tweets = this.me._favourites;
   }
 
 
