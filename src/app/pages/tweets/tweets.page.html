@@ -40,16 +40,20 @@
         <ion-item-option color="black"  (click)="createComment(tweet)">
           <ion-icon slot="icon-only" name="md-chatbubbles"></ion-icon>
         </ion-item-option>
+        <!--LIKES-->
         <ion-item-option color="light" (click)="addLike(tweet)" *ngIf="!liked(tweet)">
-          <ion-icon slot="icon-only" name="star"></ion-icon> <!--Aggiungere colori per distinzione like messo o non messo-->
+          <ion-icon slot="icon-only" name="star"></ion-icon>  
         </ion-item-option>
         <ion-item-option  color="primary" (click)="removeLike(tweet)" *ngIf="liked(tweet)">
-          <ion-icon slot="icon-only" name="star"></ion-icon> <!--Aggiungere colori per distinzione like messo o non messo-->
+          <ion-icon slot="icon-only" name="star"></ion-icon>  
         </ion-item-option>
-        <!--
-        <ion-item-option color="black" background-color="secondary" (click)="favourites(tweet)">
-          <ion-icon slot="icon-only" name="bookmark"></ion-icon> Aggiungere colori per distinzione favorito aggiunto o non aggiunto 
-        </ion-item-option>-->
+        <!-- FAVOURITES -->
+        <ion-item-option color="light" (click)="addFavourite(tweet)" *ngIf="!isFavourite(tweet)">
+          <ion-icon slot="icon-only" name="bookmark"></ion-icon>   
+        </ion-item-option>
+        <ion-item-option color="primary" (click)="removeFavourite(tweet)" *ngIf="isFavourite(tweet)">
+            <ion-icon slot="icon-only" name="bookmark"></ion-icon>   
+          </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -59,6 +63,12 @@
     <ion-fab-button (click)="createOrEditTweet()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+    <!--
+    <ion-fab-button (click)="showFavourites(favourites)">
+        <ion-icon name="bookmarks"></ion-icon>
+      </ion-fab-button>
+      -->
   </ion-fab>
+
 
 </ion-content>
